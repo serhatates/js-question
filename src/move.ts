@@ -11,6 +11,14 @@ type File = {
 };
 
 export default function move(list: List, source: string, destination: string): List {
+
+  const isArgsValid = isNumber(source) && isNumber(destination);
+  if (!isArgsValid) {
+    throw new Error('Invalid arguments');
+  };
+  source = source.trim();
+  destination = destination.trim();
+
   let sourceFolderIndex: number = -1;
   let destinationFolderIndex: number = -1;
   let fileIndex: number = -1;
@@ -47,4 +55,10 @@ export default function move(list: List, source: string, destination: string): L
   list[sourceFolderIndex].files.splice(fileIndex, 1);
 
   return list;
+}
+
+function isNumber(s: string): boolean {
+  const str = ('' + s).trim();
+  if (str.length === 0) return false;
+  return !isNaN(+str);
 }
